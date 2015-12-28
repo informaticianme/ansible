@@ -1,0 +1,49 @@
+---
+- name: symlink solr xml file to tomcat
+  sudo: yes
+  file: src=/opt/solr/{{ solr_context }}.xml dest=/etc/tomcat/Catalina/localhost/{{ solr_context }}.xml state=link
+
+- name: symlink schema from code to solr
+  sudo: yes
+  file: src=/opt/{{ project_name }}/current/solr_conf/conf/schema.xml dest=/opt/solr/collection1/conf/schema.xml state=link force=yes
+
+- name: symlink solrconfig from code to solr
+  sudo: yes
+  file: src=/opt/{{ project_name }}/current/solr_conf/conf/solrconfig.xml dest=/opt/solr/collection1/conf/solrconfig.xml state=link force=yes
+
+# - name: place solr war file
+#   become: true
+#   command: mv {{ build_path }}/solr-4.2.0/dist/solr-4.2.0.war {{ solr_home }}/solr.war
+
+# - name: create solr directories
+#   become: true
+#   file: path={{ solr_home }}/lib owner=tomcat group=tomcat state=directory
+
+# - name: copy tomcat solr.xml file
+#   template: 
+
+# - name: copy avalon solr files to solr home
+
+# - name: copy avalon files to solr home
+#   copy: src=avalon dest={{ solr_home }} owner=tomcat group=tomcat mode=0755
+
+# - name: restart tomcat service
+#   service: name=tomcat state=restarted
+
+# - name: copying a file
+#   template: src=tomcat-solr.xml dest=/usr/share/tomcat/conf/Catalina/localhost/solr.xml group=tomcat owner=tomcat
+
+# - name: copying another file
+# -  template: src=solr-solr.xml dest=/usr/share/solr/solr.xml group=tomcat owner=tomcat
+
+# - name: and again
+#   shell: mv /usr/share/solr/dist/* /usr/share/solr/lib
+
+# - name: once more
+#   command: mv /usr/share/solr/contrib /usr/share/solr/lib
+
+# - name: change solr.war owner/group to tomcat
+#   become: true
+#   command: chown tomcat:tomcat {{ tomcat_home }}/webapps/solr.war
+
+...

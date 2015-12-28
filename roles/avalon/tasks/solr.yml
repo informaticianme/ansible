@@ -1,0 +1,68 @@
+---
+- name: download solr tarball
+  get_url: url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/solr-{{ solr_version }}.tgz force=no
+
+- name: unarchive solr tarball
+  unarchive: src={{ install_path }}/solr-{{ solr_version }}.tgz dest={{ install_path }} creates={{ install_path }}/solr-{{ solr_version }}/dist/solr-{{ solr_version }}.war copy=no
+
+- name: create solr directories
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ solr_home }}/avalon/conf/xslt"
+    - "{{ solr_home }}/lib"
+
+- name: copy solr war file
+  command: mv {{ install_path }}/solr-{{ solr_version }}/dist/solr-{{ solr_version }}.war {{ solr_home }}/solr.war
+
+  # first, copy from source
+- name: create solr context file in solr home
+  template: src=avalon.xml dest={{ solr_home }}
+
+  # then, place template file
+
+  # finally, link to tomcat
+- name: symlink solr context file in tomcat conf
+  become: true
+  file: src={{ solr_home }}/{{ solr_context }}.xml dest=/etc/tomcat/Catalina/localhost/{{ solr_context }}.xml state=link
+
+  # first, copy from source
+- name: copy example solr.xml to solr home
+  command: cp {{ install_path }}/solr-{{ solr_version }}/example/solr/solr.xml {{ solr_home }}
+
+  # then, place template file
+- name: customize solr.xml cores and core definitions
+  lineinfile: dest={{ solr_home }}/solr.xml regexp="{{ item.pattern }}" line="{{ item.replacement }}" state=present
+  with_items:
+    - { pattern: '  <cores adminPath=\"/admin/cores\" defaultCoreName=\"collection1\" host=\"\\${host\\:}\" hostPort=\"\\${jetty.port\\:}\" hostContext=\"\\${hostContext\\:}\" zkClientTimeout=\"\\${zkClientTimeout\\:15000}\">', replacement: '  <cores adminPath=\"/admin/cores\" defaultCoreName=\"avalon\" host=\"${host:}\" hostPort=\"8983\" hostContext=\"${hostContext:}\" zkClientTimeout=\"${zkClientTimeout:15000}\">' }
+    - { pattern: '    <core name=\"collection1\" instanceDir=\"collection1\" />', replacement: '    <core name=\"avalon\" instanceDir=\"avalon/\" />' }
+  
+- name: place solr schema.xml file
+  copy: src=schema.xml dest={{ solr_home }}/avalon/conf
+ 
+- name: place solr solrconfig.xml file
+  copy: src=solrconfig.xml dest={{ solr_home }}/avalon/conf
+  
+- name: customize solrconfig.xml lib references
+  lineinfile: dest={{ solr_home }}/avalon/conf/solrconfig.xml regexp="{{ item.pattern }}" line="{{ item.replacement }}" state=present
+  with_items:
+    - { pattern: '  <lib dir=\"../lib/contrib/analysis-extras/lib\" />', replacement: '  <lib dir=\"../../lib/contrib/analysis-extras/lib\" />' }
+    - { pattern: '  <lib dir=\"../lib/contrib/analysis-extras/lucene-libs\" />', replacement: '  <lib dir=\"../../lib/contrib/analysis-extras/lucene-libs\" />' }
+
+- name: copy example and luke xslt files to the solr xslt directory
+  command: cp /home/install/solr-4.2.0/example/solr/collection1/conf/xslt/{{ item }} {{ solr_home }}/avalon/conf/xslt
+  with_items:
+    - example_atom.xsl
+    - example_rss.xsl
+    - example.xsl
+    - luke.xsl
+
+- name: copy solr dist directory to solr home
+  command: cp -R {{ install_path }}/solr-{{ solr_version }}/dist {{ solr_home }}/lib
+
+- name: copy solr contrib directory to solr home
+  command: cp -R {{ install_path }}/solr-{{ solr_version }}/contrib {{ solr_home }}/lib
+
+- name: set ownership and group for solr
+  become: true
+  command: chown -R tomcat:tomcat {{ solr_home }}
+...

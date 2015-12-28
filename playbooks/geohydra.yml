@@ -1,0 +1,4 @@
+---
+- name: run initialize playbook
+  include: initialize.yml
+...

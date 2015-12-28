@@ -1,0 +1,76 @@
+---
+- name: create NUL repository
+  become: yes
+  copy: src=nul-public.repo dest=/etc/yum.repos.d/nul-public.repo force=no mode=0644
+
+- name: install NUL GPG key
+  become: yes
+  command: curl http://yumrepo-public.library.northwestern.edu/RPM-GPG-KEY-nul -o /etc/pki/rpm-gpg/RPM-GPG-KEY-nul
+
+- name: disable NUL repository
+  become: yes
+  replace: dest=/etc/yum.repos.d/nul-public.repo regexp="enabled=1" replace="enabled=0"
+
+- name: create NUX repository
+  become: yes
+  command: rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm
+
+- name: install NUX GPG key
+  become: yes
+  command: rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
+
+- name: disable NUX repository
+  become: yes
+  replace: dest=/etc/yum.repos.d/nux-dextop.repo regexp="enabled=1" replace="enabled=0"
+
+- name: install nux-dextop based ffmpeg prequisites
+  become: yes
+  yum: name={{ item }} state=present enablerepo=nux-dextop
+  with_items:
+    - a52dec-devel
+    - faad2-devel
+    - lame-devel
+    - libdc1394-devel
+    - librtmp-devel
+    - opencore-amr-devel
+    - x264-devel
+    - xvidcore-devel
+
+- name: install nul-public based ffmpeg prequisites
+  become: yes
+  yum: name={{ item }} state=present enablerepo=nul-public
+  with_items:
+    - frei0r-plugins-devel
+    - libfaac-devel
+    - mediainfo
+    - vo-aacenc-devel
+
+# - name: install {other repo} based ffmpeg prequisites
+#   become: yes
+#   yum: name={{ item }} state=present enablerepo=nul-public
+#   with_items:
+#     - imlib2-devel
+#     - libva-devel
+#     - libvdpau-devel
+#     - schroedinger-devel
+#     - yasm
+
+---
+- name: install rpmdevtools
+  yum: name=rpmdevtools state=present
+
+- name: run rpmdev-setuptree
+  become_user: red5
+  command: rpmdev-setuptree
+
+- name: run the ffmpeg installer?
+  become_user: red5
+  command: rpm -ivh https://github.com/avalonmediasystem/avalon-installer/blob/master/files/ffmpeg/ffmpeg-2.4.2-1.el6.src.rpm?raw=true
+
+- name: do this other thing
+  become_user: red5
+  command: rpmbuild -bb rpmbuild/SPECS/ffmpeg24.spec
+
+- name: finish install?
+  command: rpm -ivh /home/red5/rpmbuild/RPMS/x86_64/ffmpeg-*.rpm
+...

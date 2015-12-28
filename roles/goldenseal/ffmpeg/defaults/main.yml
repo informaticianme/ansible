@@ -1,0 +1,5 @@
+---
+install_user: build
+install_group: build
+become_user: build
+ffmpeg_path: /opt/install/ffmpeg_sources

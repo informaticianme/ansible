@@ -1,0 +1,28 @@
+---
+- name: install mariadb server
+  yum: name=mariadb-server state=present
+
+- name: start mariadb service
+  service: name=mariadb state=started
+  
+- name: create fedora3 database
+  command: mysql -u root -e "CREATE DATABASE fedora3"
+  
+- name: create fcrepo user
+  command: mysql -u root -e "CREATE USER 'fcrepo'@'localhost' IDENTIFIED BY 'fcrepo'"
+
+- name: grant fcrepo privileges on fedora3
+  command: mysql -u root -e "GRANT ALL PRIVILEGES ON fedora3.* TO 'fcrepo'@'localhost'"
+  
+- name: create rails database
+  command: mysql -u root -e "CREATE DATABASE rails"
+
+- name: create rails user
+  command: mysql -u root -e "CREATE USER 'rails'@'localhost' IDENTIFIED BY 'rails'"
+
+- name: grant rails privileges on rails
+  command: mysql -u root -e "GRANT ALL PRIVILEGES ON rails.* TO 'rails'@'localhost'"
+  
+- name: flush privileges
+  command: mysql -u root -e "FLUSH PRIVILEGES"
+...

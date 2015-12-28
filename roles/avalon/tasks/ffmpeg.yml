@@ -1,0 +1,21 @@
+---
+- name: install EPEL based ffmpeg prequisites
+  become: yes
+  yum: name={{ item }} state=present
+  with_items:
+    - SDL-devel
+    - bzip2-devel
+    - freetype-devel
+    - gsm-devel
+    - libraw1394-devel
+    - libtheora-devel
+    - libstdc++-devel
+    - libvorbis-devel
+    - libvpx-devel
+    - opencv-devel
+    - openjpeg-devel
+    - openssl-devel
+    - speex-devel
+    - texi2html
+    - zlib-devel
+...

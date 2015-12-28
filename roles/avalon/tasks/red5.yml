@@ -1,0 +1,25 @@
+---
+- name: add red5 group
+  group: name=red5 state=present
+
+- name: add red5 user
+  user: name=red5 group=red5 state=present
+
+- name: download red5
+  get_url: url=http://yumrepo-public.library.northwestern.edu/red5-1.0.1.tar.gz dest={{ install_path }} force=no
+
+- name: unarchive red5
+  unarchive: src={{ install_path }}/red5-1.0.1.tar.gz dest={{ install_path }} creates={{ install_path }}/red5-server-1.0/license.txt copy=no
+
+- name: place red5
+  command: "mv {{ install_path }}/red5-server-1.0 /usr/share/red5"
+
+- name: download red5 init script
+  get_url: url=https://raw.github.com/avalonmediasystem/avalon-installer/master/modules/red5/templates/red5_init_script.erb dest=/etc/rc.d/init.d/red5 force=no
+
+- name: assign red5 permissions on red5 directory
+  command: chown -R red5:red5 /usr/share/red5
+
+- name: assign execute permission on red5 init script # create centos 7 service from init script: https://scottlinux.com/2014/12/08/how-to-create-a-systemd-service-in-linux-centos-7/
+  command: chmod +x /etc/rc.d/init.d/red5
+...

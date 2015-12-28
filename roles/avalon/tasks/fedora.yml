@@ -1,0 +1,25 @@
+---
+- name: download fedora commons repository
+  get_url: url=http://sourceforge.net/projects/fedora-commons/files/fedora/3.6.2/fcrepo-installer-3.6.2.jar/download dest={{ install_path }} force=no
+
+- name: place fedora bash script
+  copy: src=install_fedora.sh dest={{ install_path }} mode=0744
+
+- name: place fedora expect script
+  copy: src=install_fedora.exp dest={{ install_path }} mode=0744
+
+- name: ensure no previous fedora directory exists
+  command: rm -rf /opt/fedora
+
+- name: install expect
+  yum: name=expect state=present
+  
+- name: run fedora bash/exp scripts
+  shell: "{{ install_path }}/install_fedora.sh >> {{ install_path }}/install_fedora.log"
+
+- name: change fedora commons ownership to tomcat
+  command: chown -R tomcat:tomcat /opt/fedora
+
+- name: restart tomcat service
+  service: name=tomcat state=restarted
+...

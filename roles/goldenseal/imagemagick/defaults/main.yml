@@ -1,0 +1,5 @@
+---
+install_user: build
+install_group: build
+become_user: build
+magick_path: /opt/install/imagemagick_sources

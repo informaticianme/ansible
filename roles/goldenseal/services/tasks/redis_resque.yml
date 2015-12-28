@@ -1,0 +1,27 @@
+---
+#- name: download epel repo
+#  sudo: yes
+#  get_url: url=http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/epel-release-7.5.noarch.rpm
+  
+- name: enable epel repo
+  become_user: root
+  yum: name=http://dl.fedoraproject.org/pub/epel/7/x86_64/e//epel-release-7-5.noarch.rpm state=present
+  
+- name: install redis
+  become: yes
+  yum: name={{ item }} update_cache=yes state=present
+  with_items: 
+      - redis 
+      - php-pecl-redis
+
+- name: run redis
+  service: name=redis state=started
+  become: yes
+  
+- name: copy resque init script
+  template: src=pool_q.j2 dest=/etc/init.d/resque-pool mode=0755
+  become: yes
+
+- name: start resque
+  service: name=resque-pool state=started enabled=yes
+  become: yes
