@@ -1,2 +1,85 @@
 ---
+- name: add matterhorn group
+  become: true
+  group: name=matterhorn state=present
+
+- name: add matterhorn user
+  become: true
+  user: name=matterhorn group=matterhorn state=present
+
+- name: download avalon customized matterhorn
+  get_url: url=https://github.com/avalonmediasystem/avalon-felix/archive/1.4.x.tar.gz dest={{ install_path }}
+
+- name: unarchive matterhorn
+  unarchive: src={{ install_path }}/avalon-felix-1.4.x.tar.gz dest={{ install_path }} copy=false
+
+- name: move matterhorn directory to system location
+  become: true
+  command: mv avalon-felix-1.4.x {{ matterhorn_home }}
+
+- name: change permissions on matterhorn directory
+  become: true
+  command: chown -R matterhorn:matterhorn {{ matterhorn_home }}
+
+- name: download matterhorn init script
+  get_url: url=https://raw.github.com/avalonmediasystem/config-files/master/matterhorn/matterhorn_init.sh dest={{ install_path }}
+
+- name: place matterhorn init script
+  become: true
+  command: mv matterhorn_init.sh /etc/init.d/matterhorn
+
+- name: create avalon group
+  become: true
+  group: name=avalon state=present
+
+- name: create avalon user
+  become: true
+  user: name=avalon group=avalon state=present
+
+- name: create avalon directories
+  become: true
+  command: mkdir -p {{ item }}
+  with_items:
+    - '/var/avalon/hls_streams'
+    - '/var/www/avalon/public/streams'
+    - '/usr/share/red5/webapps/avalon/streams'
+
+- name: link avalon directories
+  become: true
+  command: ln -s {{ item.src }} {{ item.dest }}
+  with_items:
+    - { src: '/usr/share/red5/webapps/avalon/streams', dest: '/var/avalon/rtmp_streams' }
+    - { src: '/var/avalon/hls_streams', dest: '/var/www/avalon/public/streams' }
+  
+- name: change permissions on avalon directory
+  become: true
+  command: chown -R avalon:avalon {{ avalon_home }}
+
+- name: change permissions on red5 avalon directory
+  become: true
+  command: chown -R red5:avalon /usr/share/red5/webapps/avalon/streams
+
+- name: change permissions on red5 avalon directory
+  become: true
+  command: chmod 0775 /usr/share/red5/webapps/avalon/streams
+
+- name: change permissions on avalon hls_streams directory
+  become: true
+  command: chown -R matterhorn:matterhorn /var/avalon/hls_streams
+
+- name: change permissions on red5 avalon directory
+  become: true
+  command: chmod 0775 /var/avalon/hls_streams
+
+- name: place matterhorn config.properties file
+  become: true
+  template: src=config.properties.j2 dest={{ matterhorn_home }}/config.properties backup=yes
+
+- name: add matterhorn user to avalon group
+  become: true
+  user: name=matterhorn append=yes groups=avalon
+
+- name: place file to increase max matterhorn concurrent processes
+  become: true
+  copy: src=99-matterhorn.conf dest=/etc/security/limits.d/99-matterhorn.conf
 ...

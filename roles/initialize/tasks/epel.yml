@@ -9,5 +9,5 @@
   command: rm {{ install_path }}/epel-release-7-5.noarch.rpm
 
 - name: disable EPEL repository
-  replace: dest=/etc/yum.repos.d/epel.repo regexp="enabled=1" replace="enabled=0"
+  replace: dest=/etc/yum.repos.d/epel.repo regexp="enabled=1" replace="enabled=0" backup=yes
 ...

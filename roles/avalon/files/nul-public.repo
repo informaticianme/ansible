@@ -1,4 +1,4 @@
-[nul_public]
+[nul-public]
 name=NUL Library Public RHEL repository
 baseurl=http://yumrepo-public.library.northwestern.edu/x86_64
 enabled=1

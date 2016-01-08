@@ -3,23 +3,32 @@
   get_url: url=http://sourceforge.net/projects/fedora-commons/files/fedora/3.6.2/fcrepo-installer-3.6.2.jar/download dest={{ install_path }} force=no
 
 - name: place fedora bash script
-  copy: src=install_fedora.sh dest={{ install_path }} mode=0744
+  template: src=install_fedora.sh.j2 dest={{ install_path }}/install_fedora.sh mode=0744
 
 - name: place fedora expect script
-  copy: src=install_fedora.exp dest={{ install_path }} mode=0744
+  template: src=install_fedora.exp.j2 dest={{ install_path }}/install_fedora.exp mode=0744
 
 - name: ensure no previous fedora directory exists
+  become: true
   command: rm -rf /opt/fedora
 
 - name: install expect
+  become: true
   yum: name=expect state=present
   
 - name: run fedora bash/exp scripts
+  become: true
   shell: "{{ install_path }}/install_fedora.sh >> {{ install_path }}/install_fedora.log"
 
 - name: change fedora commons ownership to tomcat
-  command: chown -R tomcat:tomcat /opt/fedora
+  become: true
+  command: chown -R tomcat:tomcat {{ fedora_home }}
+
+- name: change tomcat fedora context ownership to tomcat
+  become: true
+  command: chown -R tomcat:tomcat {{ tomcat_conf }}/Catalina/localhost/{{ fedora_context }}.xml
 
 - name: restart tomcat service
+  become: true
   service: name=tomcat state=restarted
 ...
