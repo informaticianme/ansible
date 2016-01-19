@@ -38,7 +38,7 @@
 
 - name: create avalon directories
   become: true
-  command: mkdir -p {{ item }}
+  file: path={{ item }} state=directory
   with_items:
     - '/var/avalon/hls_streams'
     - '/var/www/avalon/public/streams'
@@ -70,6 +70,10 @@
 - name: change permissions on red5 avalon directory
   become: true
   command: chmod 0775 /var/avalon/hls_streams
+
+- name: change permissions on red5 avalon directory
+  become: true
+  command: chown red5:red5 /usr/share/red5/webapps/avalon
 
 - name: place matterhorn config.properties file
   become: true

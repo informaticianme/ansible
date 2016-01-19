@@ -1,5 +1,0 @@
----
-install_path: /opt/install
-install_user: build
-install_group: build
-become_user: build

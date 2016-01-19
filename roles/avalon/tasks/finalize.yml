@@ -1,5 +1,5 @@
 ---
 - name: revoke temporary permissions for {{ remote_user }} on opt directory
   become: true
-  file: path=/opt owner={{ remote_user }} group={{ remote_user }}
+  file: path=/opt owner=root group=root
 ...

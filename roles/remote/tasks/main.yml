@@ -24,6 +24,16 @@
     - { pattern: "PasswordAuthentication yes", replacement: 'PasswordAuthentication no' }
     - { pattern: '#PermitRootLogin yes', replacement: 'PermitRootLogin no' }
 
+# - name: remove default ssh keys
+#   file: src=/etc/ssh/{{ item }} state=absent
+#   with_items:
+#     - ssh_host_ecdsa_key
+#     - ssh_host_ecdsa_key.pub
+#     - ssh_host_ed25519_key
+#     - ssh_host_ed25519_key.pub
+#     - ssh_host_rsa_key
+#     - ssh_host_rsa_key.pub
+
 - name: restart sshd service
   service: name=sshd state=restarted
 ...

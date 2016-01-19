@@ -11,11 +11,11 @@
   when: item.password is defined
   no_log: true
 
-- name: set password expirations
-  command: chage -d 0 {{ item.user }}
-  with_items: "{{ accounts }}"
-  when: item.password is defined
-  no_log: true
+# - name: set password expirations
+#   command: chage -d 0 {{ item.user }}
+#   with_items: "{{ accounts }}"
+#   when: item.password is defined
+#   no_log: true
 
 - name: add user ssh keys
   authorized_key: user="{{ item.0.user }}" key="{{ item.1 }}"
