@@ -1,7 +1,8 @@
 ---
 - name: format volume for /opt
-  filesystem: fstype=xfs dev=/dev/sdc
+  sudo: true
+  filesystem: fstype=xfs dev=/dev/sdb
 
 - name: mount volume at /opt
-  mount: name=/opt src=/dev/sdc fstype=xfs state=mounted
-
+  sudo: true
+  mount: name=/opt src=/dev/sdb fstype=xfs state=mounted

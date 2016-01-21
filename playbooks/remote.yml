@@ -1,7 +1,7 @@
 ---
 - name: establish permanent remote user
   hosts: "{{ hosts }}"
-  gather_facts: false
+  gather_facts: true
   remote_user: "{{ default_user }}"
   roles:
     - { role: remote, become: true }

@@ -2,7 +2,7 @@
 - include_vars: main.yml
   
 - include: remote.yml
-- include: epel.yml
+# - include: epel.yml
 - include: packages_update.yml
 - include: packages_dev.yml
 - include: denyhosts.yml

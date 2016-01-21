@@ -22,12 +22,12 @@
     hydra_pg_pass: 58syQ8fi@0 # password for hydra_pg_user
     rails_secret_key_base: 79c1389c2fadc5a5a1918a518af7vads89en3a304ab34eb700c # run "rake secret" on a rails project, or use some other random string generator and paste result here
   roles:
-    # - { role: generic-centos, sudo: yes }
-    # - { role: housekeeping, sudo: yes }
-    # - { role: ruby }
-    # - { role: hydra-stack }
-    # - { role: services }
-    # - { role: passenger, sudo: yes }
-    # - { role: ffmpeg }
+    - { role: generic-centos, sudo: yes }
+    - { role: housekeeping, sudo: yes }
+    - { role: ruby }
+    - { role: hydra-stack }
+    - { role: services }
+    - { role: passenger, sudo: yes }
+    - { role: ffmpeg }
     - { role: imagemagick }
     - { role: app-config, sudo: yes }
