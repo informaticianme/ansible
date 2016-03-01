@@ -16,7 +16,7 @@ set -e
 # These variables are set in the configuration scripts.
 ##
 #eg:  /usr/local/matterhorn
-MATTERHORN=${MATTERHORN_HOME:-/usr/local/matterhorn}
+MATTERHORN=${MATTERHORN_HOME:-/usr/share/matterhorn}
 #eg:  /usr/local/matterhorn/felix, or $MATTERHORN
 FELIX_HOME=${FELIX_HOME:-$MATTERHORN}
 #eg:  /usr/local/matterhorn/capture-agent, or $MATTERHORN/capture-agent

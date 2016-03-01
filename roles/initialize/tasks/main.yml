@@ -1,7 +1,8 @@
 ---
 - include_vars: main.yml
-  
+
 - include: remote.yml
+# - include: ntp.yml
 # - include: epel.yml
 - include: packages_update.yml
 - include: packages_dev.yml

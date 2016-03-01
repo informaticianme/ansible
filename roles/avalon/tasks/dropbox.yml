@@ -7,6 +7,10 @@
   become: true
   user: name=avalondrop group=dropbox state=present
 
+- name: add dropbox group to avalon user
+  become: true
+  command: usermod -G dropbox avalon
+
 - name: create dropbox directory
   become: true
   file: path=/var/avalon/dropbox state=directory owner=avalondrop group=dropbox mode=2775

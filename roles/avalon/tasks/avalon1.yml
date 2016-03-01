@@ -1,6 +1,6 @@
 ---
 - name: clone avalon repository
-  git: repo=git://github.com/avalonmediasystem/avalon.git dest={{ install_path }}/avalon version=v4.0.1 accept_hostkey=yes
+  git: repo=git://github.com/wulib-wustl-edu/avalon.git dest={{ install_path }}/avalon version=v4.0.1-themed accept_hostkey=yes
 
 - name: move git repo public files to avalon production public directory
   become: true
@@ -12,6 +12,14 @@
 - name: move git repo non-public files to avalon production directory
   become: true
   shell: mv {{ install_path }}/avalon/* /var/www/avalon
+
+- name: remove extraneous directories pulled via github sub-projects
+  become: true
+  command: rm -rf {{ item }}
+  with_items:
+    - /var/www/avalon/felix
+    - /var/www/avalon/jetty
+    - /var/www/avalon/red5
 
 - name: change ownership of avalon home directory
   become: true

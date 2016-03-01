@@ -18,9 +18,9 @@
 # - include: passenger.yml
 # - include: httpd_secure.yml
 # - include: avalon1.yml
-# - include: avalon2.yml
-# - include: red5_avalon.yml
-# - include: dropbox.yml
-# - include: chkconfig.yml
+- include: avalon2.yml
+- include: red5_avalon.yml
+- include: dropbox.yml
+- include: chkconfig.yml
 - include: finalize.yml
 ...

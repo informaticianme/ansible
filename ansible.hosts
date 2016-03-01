@@ -1,5 +1,6 @@
 ### Infrastructure
 [all]
+avalonprod
 hydraprod
 hydrademo
 hydraqa
@@ -45,6 +46,8 @@ hydrademo
 hydraqa
 
 [vbox]
+avalonprod
+
 avalon-prod
 avalon-stage
 avalon-demo

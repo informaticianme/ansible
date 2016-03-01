@@ -1,5 +1,5 @@
 ---
-- name: install open java 1.8
+- name: install headless open java 1.8
   become: true
   yum: name=java-1.8.0-openjdk-headless state=present # use headless?
 

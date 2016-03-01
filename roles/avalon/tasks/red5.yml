@@ -28,4 +28,8 @@
 - name: assign execute permission on red5 init script # create centos 7 service from init script: https://scottlinux.com/2014/12/08/how-to-create-a-systemd-service-in-linux-centos-7/
   become: true
   command: chmod +x /etc/rc.d/init.d/red5
+
+- name: start red5 server
+  become: true
+  command: /etc/rc.d/init.d/red5 start
 ...
