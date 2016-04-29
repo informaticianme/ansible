@@ -1,6 +1,7 @@
 ### Infrastructure
 [all]
 avalonprod
+avalonprod2
 hydraprod
 hydrademo
 hydraqa
@@ -33,6 +34,7 @@ chani
 tsmugi
 usul
 nas
+red5
 
 [aws]
 briareos-prod
@@ -46,8 +48,6 @@ hydrademo
 hydraqa
 
 [vbox]
-avalonprod
-
 avalon-prod
 avalon-stage
 avalon-demo
@@ -75,6 +75,12 @@ goldenseal-stage
 goldenseal-demo
 goldenseal-test
 goldenseal-dev
+
+red5
+red5-dev
+hydraprod
+avalonprod
+avalonprod2
 
 [ostack]
 
@@ -107,6 +113,12 @@ goldenseal-stage
 goldenseal-demo
 goldenseal-test
 goldenseal-dev
+
+red5
+red5-dev
+hydraprod
+avalonprod
+avalonprod2
 
 [rails]
 briareos-prod
