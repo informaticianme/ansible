@@ -9,9 +9,9 @@ NameVirtualHost *:80
     Order allow,deny
     Allow from all
   </Directory>
-  ErrorLog /var/log/httpd/avalon.dev_error.log
+  ErrorLog /var/log/httpd/avalon.{{ rails_environment }}_error.log
   LogLevel warn
-  CustomLog /var/log/httpd/avalon.dev_access.log combined
+  CustomLog /var/log/httpd/avalon.{{ rails_environment }}_access.log combined
   ServerSignature Off
   RailsEnv {{ rails_environment }}
 </VirtualHost>

@@ -14,6 +14,10 @@
   become: true
   yum: name="@Development tools" state=present
 
+- name: install the epel repository
+  become: true
+  yum: name="epel-release" state=present
+
 - name: download Nux Dextop repository
   get_url: url=http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm dest={{ install_path }}/ force=no
 

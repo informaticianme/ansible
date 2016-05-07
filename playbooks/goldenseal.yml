@@ -1,6 +1,6 @@
 - name: provision vanilla centos 7 host via ssh
   hosts: "{{ hosts }}"
-  remote_user: "{{ remote_user }}"
+  remote_user: "{{ default_user }}"
   vars:
     ansible_become_pass: "{{ vault.accounts.account1.password }}"
     capistrano_user: deploy # user name for cap deployments

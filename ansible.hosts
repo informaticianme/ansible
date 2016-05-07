@@ -1,10 +1,6 @@
-### Infrastructure
 [all]
-avalonprod
-avalonprod2
-hydraprod
-hydrademo
-hydraqa
+avalon
+
 avalon-prod
 avalon-stage
 avalon-demo
@@ -15,11 +11,6 @@ briareos-stage
 briareos-demo
 briareos-test
 briareos-dev
-diotima-prod
-diotima-stage
-diotima-demo
-diotima-test
-diotima-dev
 geohydra-prod
 geohydra-stage
 geohydra-demo
@@ -30,57 +21,49 @@ goldenseal-stage
 goldenseal-demo
 goldenseal-test
 goldenseal-dev
+red5-prod
+red5-stage
+red5-demo
+red5-test
+red5-dev
 chani
 tsmugi
 usul
-nas
-red5
 
 [aws]
 briareos-prod
-diotima-prod
 
 [gws]
 
 [vsphere]
-hydraprod
-hydrademo
-hydraqa
+avalon-prod
+goldenseal-prod
 
 [vbox]
-avalon-prod
+avalon
+
 avalon-stage
 avalon-demo
 avalon-test
 avalon-dev
-
 briareos-stage
 briareos-demo
 briareos-test
 briareos-dev
-
-diotima-stage
-diotima-demo
-diotima-test
-diotima-dev
-
 geohydra-prod
 geohydra-stage
 geohydra-demo
 geohydra-test
 geohydra-dev
-
-goldenseal-prod
 goldenseal-stage
 goldenseal-demo
 goldenseal-test
 goldenseal-dev
-
-red5
+red5-prod
+red5-stage
+red5-demo
+red5-test
 red5-dev
-hydraprod
-avalonprod
-avalonprod2
 
 [ostack]
 
@@ -89,7 +72,6 @@ chani
 tsmugi
 usul
 
-### Type
 [desktop]
 chani
 tsmugi
@@ -101,24 +83,16 @@ avalon-stage
 avalon-demo
 avalon-test
 avalon-dev
-
 geohydra-prod
 geohydra-stage
 geohydra-demo
 geohydra-test
 geohydra-dev
-
 goldenseal-prod
 goldenseal-stage
 goldenseal-demo
 goldenseal-test
 goldenseal-dev
-
-red5
-red5-dev
-hydraprod
-avalonprod
-avalonprod2
 
 [rails]
 briareos-prod
@@ -127,52 +101,41 @@ briareos-demo
 briareos-test
 briareos-dev
 
-diotima-prod
-diotima-stage
-diotima-demo
-diotima-test
-diotima-dev
-
 [dbase]
 
-### Environment
 [prod]
 avalon-prod
 briareos-prod
-diotima-prod
 geohydra-prod
 goldenseal-prod
+red5-prod
 
 [stage]
 avalon-stage
 briareos-stage
-diotima-stage
 geohydra-stage
 goldenseal-stage
+red5-stage
 
 [demo]
 avalon-demo
 briareos-demo
-diotima-demo
 geohydra-demo
 goldenseal-demo
+red5-demo
 
 [test]
 avalon-test
 briareos-test
-diotima-test
 geohydra-test
 goldenseal-test
+red5-test
 
 [dev]
 avalon-dev
 briareos-dev
-diotima-dev
 geohydra-dev
 goldenseal-dev
-
-### Backup
-[shiris]
-nas
+red5-dev
 
 [glacier]

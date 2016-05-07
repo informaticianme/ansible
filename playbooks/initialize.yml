@@ -5,7 +5,7 @@
 - name: initialize basic server configuration
   hosts: "{{ hosts }}"
   gather_facts: true
-  remote_user: "{{ remote_user }}"
+  remote_user: "{{ default_user }}"
   vars:
     ansible_become_pass: "{{ vault.accounts.account1.password }}"
   roles:

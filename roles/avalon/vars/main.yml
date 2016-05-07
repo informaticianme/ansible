@@ -15,5 +15,4 @@ avalon_home: /var/www/avalon
 ruby_version: 2.1.7
 passenger_version: 5.0.17
 rails_environment: production
-server_name: test-avalon
 ...
