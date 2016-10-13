@@ -18,11 +18,11 @@
   with_items: "{{ keyz }}"
   no_log: true
 
-- name: disable password authentication and root access
-  lineinfile: dest=/etc/ssh/sshd_config regexp="{{ item.pattern }}" line="{{ item.replacement }}" state=present
-  with_items:
-    - { pattern: "PasswordAuthentication yes", replacement: 'PasswordAuthentication no' }
-    - { pattern: '#PermitRootLogin yes', replacement: 'PermitRootLogin no' }
+# - name: disable password authentication and root access
+#   lineinfile: dest=/etc/ssh/sshd_config regexp="{{ item.pattern }}" line="{{ item.replacement }}" state=present
+#   with_items:
+#     - { pattern: "PasswordAuthentication yes", replacement: 'PasswordAuthentication no' }
+#     - { pattern: '#PermitRootLogin yes', replacement: 'PermitRootLogin no' }
 
 # - name: remove default ssh keys
 #   file: src=/etc/ssh/{{ item }} state=absent
