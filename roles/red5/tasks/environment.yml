@@ -2,9 +2,9 @@
 - name: ensure valid hostname
   debug: msg="{{ ansible_hostname }}"
 
-- name: disable firewalld temporarily # create service from avalon-ip-tables.sh
-  become: true
-  service: name=firewalld state=stopped
+# - name: disable firewalld temporarily # create service from avalon-ip-tables.sh
+#   become: true
+#   service: name=firewalld state=stopped
 
 - name: disable SELinux
   become: true
