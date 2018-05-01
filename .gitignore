@@ -1,2 +1,4 @@
 ansible.vault
 *.gz
+.idea/
+all.yml
